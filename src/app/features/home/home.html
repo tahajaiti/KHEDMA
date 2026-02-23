@@ -1,0 +1,53 @@
+<div class="min-h-[calc(100vh-56px)] flex items-center justify-center px-4">
+  <div class="text-center max-w-2xl">
+    <div class="inline-flex items-center gap-2 bg-amber-500/10 text-amber-400 text-xs font-medium px-3 py-1.5 rounded-full mb-6">
+      <span class="w-1.5 h-1.5 bg-amber-400 rounded-full animate-pulse"></span>
+      Open source job aggregator
+    </div>
+
+    <h1 class="text-4xl sm:text-5xl font-bold text-zinc-100 mb-5 leading-tight">
+      Stop scrolling.<br>
+      <span class="text-amber-400">Start finding.</span>
+    </h1>
+    <p class="text-zinc-500 text-base mb-10 max-w-md mx-auto leading-relaxed">
+      Aggregate listings from multiple sources, bookmark what catches your eye, and keep tabs on where you applied.
+    </p>
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+      <a routerLink="/jobs"
+         class="inline-flex items-center gap-2 bg-amber-500 text-black px-7 py-3 rounded-lg text-sm font-semibold hover:bg-amber-400 transition-colors">
+        Browse Jobs
+        <ng-icon name="lucideArrowRight" size="16" />
+      </a>
+      @if (!isAuthenticated()) {
+        <a routerLink="/auth/register"
+           class="inline-flex items-center gap-2 border border-[#2a2a35] text-zinc-300 px-7 py-3 rounded-lg text-sm font-medium hover:border-zinc-600 hover:text-zinc-100 transition-colors">
+          Create Account
+        </a>
+      }
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-px bg-[#1a1a25] rounded-xl overflow-hidden mt-20 border border-[#1a1a25]">
+      <div class="bg-[#0f0f17] p-6 text-center">
+        <div class="w-10 h-10 bg-amber-500/10 rounded-lg flex items-center justify-center mx-auto mb-3 text-amber-400">
+          <ng-icon name="lucideSearch" size="20" />
+        </div>
+        <h3 class="text-sm font-medium text-zinc-200 mb-1">Search</h3>
+        <p class="text-xs text-zinc-600">Filter by title, location, remote</p>
+      </div>
+      <div class="bg-[#0f0f17] p-6 text-center">
+        <div class="w-10 h-10 bg-rose-500/10 rounded-lg flex items-center justify-center mx-auto mb-3 text-rose-400">
+          <ng-icon name="lucideHeart" size="20" />
+        </div>
+        <h3 class="text-sm font-medium text-zinc-200 mb-1">Save</h3>
+        <p class="text-xs text-zinc-600">Bookmark jobs for later</p>
+      </div>
+      <div class="bg-[#0f0f17] p-6 text-center">
+        <div class="w-10 h-10 bg-emerald-500/10 rounded-lg flex items-center justify-center mx-auto mb-3 text-emerald-400">
+          <ng-icon name="lucideClipboardList" size="20" />
+        </div>
+        <h3 class="text-sm font-medium text-zinc-200 mb-1">Track</h3>
+        <p class="text-xs text-zinc-600">Monitor application statuses</p>
+      </div>
+    </div>
+  </div>
+</div>
