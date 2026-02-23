@@ -1,59 +1,101 @@
 # KHEDMA
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.4.
+A job aggregator built with Angular 21 that lets you search listings from the [Arbeitnow](https://www.arbeitnow.com/) API, save favorites, and track your applications — all in a dark-themed, minimal UI.
 
-## Development server
+## Features
 
-To start a local development server, run:
+- **Job Search** — Browse and filter jobs by keyword, location, and remote status with infinite scrolling
+- **Favorites** — Save interesting listings to revisit later (NgRx-managed state)
+- **Application Tracking** — Track where you applied, update statuses (pending / accepted / rejected), and add personal notes
+- **Auth** — Register, login, manage your profile, delete your account
+- **Lazy Loading** — Every feature module is lazy-loaded for fast initial page loads
 
-```bash
-ng serve
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Framework | Angular 21 (standalone components, signals) |
+| State Management | NgRx (Store + Effects) |
+| Styling | Tailwind CSS 4 |
+| Icons | ng-icons (Lucide icon set) |
+| Backend | JSON Server (local REST API for users, favorites, applications) |
+| External API | [Arbeitnow Job Board API](https://www.arbeitnow.com/api/job-board-api) |
+
+## Project Structure
+
+```
+src/app/
+├── core/
+│   ├── guards/          # Route guards (auth)
+│   ├── interceptors/    # HTTP error interceptor
+│   ├── models/          # TypeScript interfaces (Job, Application, Favorite, User)
+│   └── services/        # API services (jobs, auth, favorites, applications)
+├── features/
+│   ├── applications/    # Application tracking (list, card, status/notes management)
+│   ├── auth/            # Login & registration
+│   ├── favorites/       # Saved jobs (list, card)
+│   ├── home/            # Landing page
+│   ├── jobs/            # Job search, filters, card with infinite scroll
+│   └── profile/         # User profile management
+├── shared/
+│   ├── components/      # Loading spinner, navbar, pagination
+│   └── pipes/           # Relative time, truncate
+└── store/
+    └── favorites/       # NgRx actions, effects, reducer, selectors
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Prerequisites
 
-## Code scaffolding
+- **Node.js** 18+
+- **npm** 9+
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Getting Started
 
 ```bash
-ng generate --help
+# Clone the repository
+git clone <repo-url>
+cd KHEDMA
+
+# Install dependencies
+npm install
+
+# Start both the Angular dev server and JSON Server
+npm start
 ```
 
-## Building
+This runs:
+- Angular dev server at **http://localhost:4200**
+- JSON Server at **http://localhost:3000** (proxied via `/api`)
 
-To build the project run:
+### Other Scripts
 
 ```bash
-ng build
+npm run start:app   # Angular dev server only
+npm run start:api   # JSON Server only
+npm run build       # Production build
+npm run test        # Run tests (Vitest)
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## API
 
-## Running unit tests
+### External — Arbeitnow
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+The app fetches job listings from `https://www.arbeitnow.com/api/job-board-api` and applies client-side filtering by keyword and location.
 
-```bash
-ng test
-```
+### Local — JSON Server
 
-## Running end-to-end tests
+User data, favorites, and applications are stored in `db.json` and served by JSON Server on port 3000. The Angular dev server proxies `/api` requests to it via `proxy.conf.json`.
 
-For end-to-end (e2e) testing, run:
+| Endpoint | Description |
+|---|---|
+| `GET /api/users` | User accounts |
+| `GET/POST/DELETE /api/favoritesOffers` | Saved job listings |
+| `GET/POST/PATCH/DELETE /api/applications` | Tracked applications |
 
-```bash
-ng e2e
-```
+## Architecture Notes
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- **Signals + OnPush** — All stateful components use Angular signals with `ChangeDetectionStrategy.OnPush` for efficient, granular re-rendering
+- **Immutable state updates** — Arrays and collections are replaced (not mutated) so change detection picks up every update instantly
+- **Infinite scrolling** — Jobs load in batches of 20. The scroll listener runs outside Angular's zone to avoid unnecessary change detection cycles
+- **HTML stripping in service layer** — Job descriptions arrive as raw HTML from the API and are stripped once in `JobService` rather than per-card in the view
+- **Lazy-loaded routes** — Each feature area is a separate chunk loaded on demand
