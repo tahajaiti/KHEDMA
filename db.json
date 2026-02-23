@@ -1,0 +1,88 @@
+{
+  "users": [
+    {
+      "id": "5781",
+      "firstName": "Martin",
+      "lastName": "Santana",
+      "email": "jizorek@mailinator.com",
+      "password": "jizorek@mailinator.com"
+    },
+    {
+      "id": "46fd",
+      "firstName": "Nell",
+      "lastName": "HEHE",
+      "email": "moxo@mailinator.com",
+      "password": "moxo@mailinator.com"
+    }
+  ],
+  "favoritesOffers": [
+    {
+      "id": "78b3",
+      "userId": "5781",
+      "offerId": "lead-paid-search-100-remote-vollzeit-oder-teilzeit-stuttgart-207915",
+      "title": "Lead Paid Search (m/w/d) | 100 % remote | Vollzeit oder Teilzeit",
+      "company": "hurra.com",
+      "location": "Stuttgart",
+      "url": "https://www.arbeitnow.com/jobs/companies/hurracom/lead-paid-search-100-remote-vollzeit-oder-teilzeit-stuttgart-207915"
+    },
+    {
+      "id": "70b7",
+      "userId": "46fd",
+      "offerId": "senior-investment-manager-fur-erneuerbare-energieprojekte-hamburg-111810",
+      "title": "(Senior-) Investment Manager (m/w/d) für erneuerbare Energieprojekte",
+      "company": "ENOVA Unternehmensgruppe",
+      "location": "Hamburg",
+      "url": "https://www.arbeitnow.com/jobs/companies/enova-unternehmensgruppe/senior-investment-manager-fur-erneuerbare-energieprojekte-hamburg-111810"
+    },
+    {
+      "id": "3621",
+      "userId": "46fd",
+      "offerId": "junior-artist-manager-influencer-manager-berlin-433881",
+      "title": "Junior Artist Manager / Influencer Manager (m/w/d)",
+      "company": "Lionflence",
+      "location": "Berlin",
+      "url": "https://www.arbeitnow.com/jobs/companies/lionflence/junior-artist-manager-influencer-manager-berlin-433881"
+    }
+  ],
+  "applications": [
+    {
+      "id": "1a1c",
+      "userId": "5781",
+      "offerId": "lead-paid-search-100-remote-vollzeit-oder-teilzeit-stuttgart-207915",
+      "apiSource": "arbeitnow",
+      "title": "Lead Paid Search (m/w/d) | 100 % remote | Vollzeit oder Teilzeit",
+      "company": "hurra.com",
+      "location": "Stuttgart",
+      "url": "https://www.arbeitnow.com/jobs/companies/hurracom/lead-paid-search-100-remote-vollzeit-oder-teilzeit-stuttgart-207915",
+      "status": "pending",
+      "notes": "",
+      "dateAdded": "2026-02-21T19:08:56.997Z"
+    },
+    {
+      "id": "c60f",
+      "userId": "5781",
+      "offerId": "social-media-content-creator-praktikum-berlin-442603",
+      "apiSource": "arbeitnow",
+      "title": "Social Media & Content Creator (m/w/d) - Praktikum",
+      "company": "TREAGE",
+      "location": "Berlin",
+      "url": "https://www.arbeitnow.com/jobs/companies/treage/social-media-content-creator-praktikum-berlin-442603",
+      "status": "pending",
+      "notes": "",
+      "dateAdded": "2026-02-21T19:09:00.904Z"
+    },
+    {
+      "id": "c931",
+      "userId": "46fd",
+      "offerId": "senior-investment-manager-fur-erneuerbare-energieprojekte-hamburg-111810",
+      "apiSource": "arbeitnow",
+      "title": "(Senior-) Investment Manager (m/w/d) für erneuerbare Energieprojekte",
+      "company": "ENOVA Unternehmensgruppe",
+      "location": "Hamburg",
+      "url": "https://www.arbeitnow.com/jobs/companies/enova-unternehmensgruppe/senior-investment-manager-fur-erneuerbare-energieprojekte-hamburg-111810",
+      "status": "accepted",
+      "notes": "HEHE\n",
+      "dateAdded": "2026-02-22T20:52:36.560Z"
+    }
+  ]
+}
