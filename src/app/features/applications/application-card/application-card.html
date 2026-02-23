@@ -1,0 +1,77 @@
+<div class="bg-[#0f0f17] rounded-xl border border-[#1a1a25] p-5 hover:border-[#2a2a35] transition-colors">
+  <div class="flex items-start justify-between gap-4">
+    <div class="flex-1 min-w-0">
+      <h3 class="text-base font-semibold text-zinc-100 truncate">{{ application().title }}</h3>
+      <p class="text-sm text-zinc-500 mt-0.5">{{ application().company }}</p>
+    </div>
+    <span [class]="'text-xs font-medium px-2.5 py-1 rounded-full border ' + statusColor">
+      {{ statusLabel }}
+    </span>
+  </div>
+
+  <div class="flex flex-wrap items-center gap-3 mt-3 text-xs text-zinc-500">
+    @if (application().location) {
+      <span class="flex items-center gap-1">
+        <ng-icon name="lucideMapPin" size="12" />
+        {{ application().location }}
+      </span>
+    }
+    <span class="flex items-center gap-1">
+      <ng-icon name="lucideCalendar" size="12" />
+      Added {{ application().dateAdded | date:'mediumDate' }}
+    </span>
+  </div>
+
+  <div class="mt-4">
+    @if (editingNotes) {
+      <div class="space-y-2">
+        <textarea [(ngModel)]="notesValue" rows="3"
+                  class="w-full px-3 py-2 bg-[#0a0a0f] border border-[#2a2a35] rounded-lg text-sm text-zinc-200 placeholder-zinc-600 focus:ring-1 focus:ring-amber-500/50 focus:border-amber-500/50 outline-none resize-none"
+                  placeholder="Add personal notes..."></textarea>
+        <div class="flex gap-2">
+          <button (click)="saveNotes()"
+                  class="text-xs bg-amber-500 text-black px-3 py-1.5 rounded-lg font-semibold hover:bg-amber-400 transition-colors cursor-pointer">
+            Save
+          </button>
+          <button (click)="cancelEditNotes()"
+                  class="text-xs text-zinc-400 border border-[#2a2a35] px-3 py-1.5 rounded-lg hover:border-zinc-600 transition-colors cursor-pointer">
+            Cancel
+          </button>
+        </div>
+      </div>
+    } @else {
+      @if (application().notes) {
+        <div class="bg-[#1a1a25] rounded-lg p-3 text-sm text-zinc-400 cursor-pointer hover:bg-[#22222e] transition-colors"
+             (click)="startEditNotes()">
+          {{ application().notes }}
+        </div>
+      } @else {
+        <button (click)="startEditNotes()"
+                class="inline-flex items-center gap-1 text-xs text-amber-400 hover:text-amber-300 transition-colors cursor-pointer">
+          <ng-icon name="lucidePencil" size="12" />
+          Add notes
+        </button>
+      }
+    }
+  </div>
+
+  <div class="flex items-center gap-2 mt-4 pt-4 border-t border-[#1a1a25]">
+    <select [value]="application().status" (change)="onStatusChange($any($event.target).value)"
+            class="text-sm bg-[#0a0a0f] border border-[#2a2a35] text-zinc-300 rounded-lg px-3 py-2 focus:ring-1 focus:ring-amber-500/50 focus:border-amber-500/50 outline-none cursor-pointer">
+      <option value="pending">Pending</option>
+      <option value="accepted">Accepted</option>
+      <option value="rejected">Rejected</option>
+    </select>
+
+    <a [href]="application().url" target="_blank" rel="noopener noreferrer"
+       class="inline-flex items-center gap-1.5 bg-amber-500 text-black px-4 py-2 rounded-lg text-sm font-semibold hover:bg-amber-400 transition-colors">
+      View Offer
+      <ng-icon name="lucideExternalLink" size="14" />
+    </a>
+
+    <button (click)="onRemove()"
+            class="ml-auto inline-flex items-center gap-1.5 text-red-400 border border-red-500/20 px-3 py-2 rounded-lg text-sm hover:bg-red-500/10 transition-colors cursor-pointer">
+      <ng-icon name="lucideTrash2" size="16" />
+    </button>
+  </div>
+</div>

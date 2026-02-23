@@ -1,0 +1,58 @@
+<div class="max-w-5xl mx-auto px-4 py-8">
+  <h1 class="text-2xl font-bold text-zinc-100 mb-1">Applications</h1>
+  <p class="text-zinc-500 text-sm mb-6">Track and manage your job applications</p>
+
+  <div class="flex gap-2 mb-6 overflow-x-auto">
+    <button (click)="setFilter('all')"
+            [class]="activeFilter() === 'all'
+              ? 'px-4 py-2 text-sm font-medium rounded-lg bg-amber-500 text-black'
+              : 'px-4 py-2 text-sm font-medium rounded-lg border border-[#2a2a35] text-zinc-400 hover:border-zinc-600 hover:text-zinc-200 cursor-pointer transition-colors'">
+      All ({{ counts().all }})
+    </button>
+    <button (click)="setFilter('pending')"
+            [class]="activeFilter() === 'pending'
+              ? 'px-4 py-2 text-sm font-medium rounded-lg bg-amber-500/20 text-amber-400 border border-amber-500/30'
+              : 'px-4 py-2 text-sm font-medium rounded-lg border border-[#2a2a35] text-zinc-400 hover:border-zinc-600 hover:text-zinc-200 cursor-pointer transition-colors'">
+      Pending ({{ counts().pending }})
+    </button>
+    <button (click)="setFilter('accepted')"
+            [class]="activeFilter() === 'accepted'
+              ? 'px-4 py-2 text-sm font-medium rounded-lg bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
+              : 'px-4 py-2 text-sm font-medium rounded-lg border border-[#2a2a35] text-zinc-400 hover:border-zinc-600 hover:text-zinc-200 cursor-pointer transition-colors'">
+      Accepted ({{ counts().accepted }})
+    </button>
+    <button (click)="setFilter('rejected')"
+            [class]="activeFilter() === 'rejected'
+              ? 'px-4 py-2 text-sm font-medium rounded-lg bg-red-500/20 text-red-400 border border-red-500/30'
+              : 'px-4 py-2 text-sm font-medium rounded-lg border border-[#2a2a35] text-zinc-400 hover:border-zinc-600 hover:text-zinc-200 cursor-pointer transition-colors'">
+      Rejected ({{ counts().rejected }})
+    </button>
+  </div>
+
+  @if (loading()) {
+    <app-loading-spinner />
+  } @else if (filteredApplications().length === 0) {
+    <div class="text-center py-16">
+      <div class="w-16 h-16 bg-[#1a1a25] rounded-full flex items-center justify-center mx-auto mb-4 text-zinc-600">
+        <ng-icon name="lucideClipboardList" size="32" />
+      </div>
+      <p class="text-zinc-500 text-sm">
+        @if (activeFilter() === 'all') {
+          No applications tracked yet. Search for jobs and start tracking!
+        } @else {
+          No {{ activeFilter() }} applications.
+        }
+      </p>
+    </div>
+  } @else {
+    <div class="space-y-4">
+      @for (app of filteredApplications(); track app.id) {
+        <app-application-card
+          [application]="app"
+          (statusChange)="onStatusChange($event)"
+          (notesChange)="onNotesChange($event)"
+          (remove)="onRemove($event)" />
+      }
+    </div>
+  }
+</div>
