@@ -1,0 +1,67 @@
+<div class="bg-[#0f0f17] rounded-xl border border-[#1a1a25] p-5 hover:border-[#2a2a35] transition-colors">
+  <div class="flex items-start justify-between gap-4">
+    <div class="flex-1 min-w-0">
+      <h3 class="text-base font-semibold text-zinc-100 truncate">{{ job().title }}</h3>
+      <p class="text-sm text-zinc-500 mt-0.5">{{ job().company_name }}</p>
+    </div>
+    <span class="text-xs text-zinc-600 whitespace-nowrap">{{ job().created_at | relativeTime }}</span>
+  </div>
+
+  <div class="flex flex-wrap items-center gap-2 mt-3">
+    @if (job().location) {
+      <span class="inline-flex items-center gap-1 text-xs text-zinc-400 bg-[#1a1a25] px-2.5 py-1 rounded-full">
+        <ng-icon name="lucideMapPin" size="12" />
+        {{ job().location }}
+      </span>
+    }
+    @if (job().remote) {
+      <span class="text-xs text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full">Remote</span>
+    }
+    @for (type of job().job_types; track type) {
+      <span class="text-xs text-amber-400 bg-amber-500/10 px-2.5 py-1 rounded-full">{{ type }}</span>
+    }
+  </div>
+
+  <p class="text-sm text-zinc-500 mt-3 leading-relaxed">
+    {{ job().description | truncate:200 }}
+  </p>
+
+  @if (job().tags.length > 0) {
+    <div class="flex flex-wrap gap-1.5 mt-3">
+      @for (tag of job().tags.slice(0, 5); track tag) {
+        <span class="text-xs text-zinc-500 border border-[#2a2a35] px-2 py-0.5 rounded">{{ tag }}</span>
+      }
+    </div>
+  }
+
+  <div class="flex items-center gap-2 mt-4 pt-4 border-t border-[#1a1a25]">
+    <a [href]="job().url" target="_blank" rel="noopener noreferrer"
+       class="inline-flex items-center gap-1.5 bg-amber-500 text-black px-4 py-2 rounded-lg text-sm font-semibold hover:bg-amber-400 transition-colors">
+      View Offer
+      <ng-icon name="lucideExternalLink" size="14" />
+    </a>
+
+    @if (isAuthenticated()) {
+      <button (click)="onToggleFavorite()"
+              [class]="isFavorite()
+                ? 'inline-flex items-center gap-1.5 bg-rose-500/10 text-rose-400 border border-rose-500/20 px-4 py-2 rounded-lg text-sm font-medium hover:bg-rose-500/20 transition-colors cursor-pointer'
+                : 'inline-flex items-center gap-1.5 bg-transparent text-zinc-400 border border-[#2a2a35] px-4 py-2 rounded-lg text-sm font-medium hover:border-zinc-600 hover:text-zinc-200 transition-colors cursor-pointer'">
+        <ng-icon name="lucideHeart" size="16" />
+        {{ isFavorite() ? 'Saved' : 'Save' }}
+      </button>
+
+      @if (!isTracked()) {
+        <button (click)="onTrack()"
+                class="inline-flex items-center gap-1.5 bg-transparent text-zinc-400 border border-[#2a2a35] px-4 py-2 rounded-lg text-sm font-medium hover:border-zinc-600 hover:text-zinc-200 transition-colors cursor-pointer">
+          <ng-icon name="lucideClipboardList" size="16" />
+          Track
+        </button>
+      } @else {
+        <span class="inline-flex items-center gap-1.5 text-emerald-400 text-sm font-medium px-4 py-2">
+          <ng-icon name="lucideCheck" size="16" />
+          Tracked
+        </span>
+      }
+    }
+  </div>
+</div>

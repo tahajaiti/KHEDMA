@@ -1,0 +1,47 @@
+<div class="max-w-5xl mx-auto px-4 py-8">
+  <div class="mb-8">
+    <h1 class="text-2xl font-bold text-zinc-100 mb-1">Find your next opportunity</h1>
+    <p class="text-zinc-500 text-sm">Search through thousands of job listings</p>
+  </div>
+
+  <app-job-filters (search)="searchJobs($event)" class="block mb-6" />
+
+  @if (loading()) {
+    <app-loading-spinner />
+  } @else if (error()) {
+    <div class="bg-red-500/10 text-red-400 text-sm rounded-xl p-6 text-center border border-red-500/20">
+      <p class="font-medium">Something went wrong</p>
+      <p class="mt-1">{{ error() }}</p>
+    </div>
+  } @else if (displayedJobs().length === 0) {
+    <div class="text-center py-16">
+      <div class="w-16 h-16 bg-[#1a1a25] rounded-full flex items-center justify-center mx-auto mb-4 text-zinc-600">
+        <ng-icon name="lucideSearch" size="32" />
+      </div>
+      <p class="text-zinc-500 text-sm">No jobs found. Try adjusting your search criteria.</p>
+    </div>
+  } @else {
+    <p class="text-sm text-zinc-600 mb-4">{{ displayedJobs().length }} results</p>
+
+    <div class="space-y-6">
+      @for (job of displayedJobs(); track job.slug) {
+        <app-job-card
+          [job]="job"
+          [isAuthenticated]="isAuthenticated()"
+          [isFavorite]="isFavorite(job.slug)"
+          [isTracked]="isTracked(job.slug)"
+          (addToFavorites)="addToFavorites($event)"
+          (removeFromFavorites)="removeFromFavorites($event)"
+          (trackApplication)="trackApplication($event)" />
+      }
+    </div>
+
+    @if (loadingMore()) {
+      <div class="flex justify-center py-8">
+        <div class="w-6 h-6 border-2 border-amber-500/30 border-t-amber-500 rounded-full animate-spin"></div>
+      </div>
+    } @else if (!canLoadMore()) {
+      <p class="text-center text-zinc-600 text-sm py-8">You've reached the end</p>
+    }
+  }
+</div>
