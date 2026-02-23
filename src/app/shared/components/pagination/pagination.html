@@ -1,0 +1,24 @@
+@if (totalPages() > 1) {
+  <div class="flex items-center justify-center gap-1 mt-8">
+    <button (click)="goToPage(currentPage() - 1)"
+            [disabled]="currentPage() === 1"
+            class="px-3 py-2 text-sm rounded-lg border border-[#2a2a35] text-zinc-400 hover:border-zinc-600 hover:text-zinc-200 disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer">
+      Previous
+    </button>
+
+    @for (page of pages; track page) {
+      <button (click)="goToPage(page)"
+              [class]="page === currentPage()
+                ? 'px-3 py-2 text-sm rounded-lg bg-amber-500 text-black font-semibold'
+                : 'px-3 py-2 text-sm rounded-lg border border-[#2a2a35] text-zinc-400 hover:border-zinc-600 hover:text-zinc-200 cursor-pointer transition-colors'">
+        {{ page }}
+      </button>
+    }
+
+    <button (click)="goToPage(currentPage() + 1)"
+            [disabled]="currentPage() === totalPages()"
+            class="px-3 py-2 text-sm rounded-lg border border-[#2a2a35] text-zinc-400 hover:border-zinc-600 hover:text-zinc-200 disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer">
+      Next
+    </button>
+  </div>
+}
