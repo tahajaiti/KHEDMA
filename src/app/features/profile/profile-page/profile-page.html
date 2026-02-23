@@ -1,0 +1,29 @@
+<div class="max-w-3xl mx-auto px-4 py-8">
+  <h1 class="text-2xl font-bold text-zinc-100 mb-1">Profile</h1>
+  <p class="text-zinc-500 text-sm mb-8">Manage your account settings</p>
+
+  @if (successMessage) {
+    <div class="bg-emerald-500/10 text-emerald-400 text-sm rounded-lg p-3 mb-6 border border-emerald-500/20">
+      {{ successMessage }}
+    </div>
+  }
+
+  @if (errorMessage) {
+    <div class="bg-red-500/10 text-red-400 text-sm rounded-lg p-3 mb-6 border border-red-500/20">
+      {{ errorMessage }}
+    </div>
+  }
+
+  @if (user(); as currentUser) {
+    <app-profile-form [user]="currentUser" (save)="onSave($event)" />
+
+    <div class="mt-8 bg-[#0f0f17] rounded-xl border border-red-500/20 p-6">
+      <h2 class="text-lg font-semibold text-red-400 mb-2">Danger Zone</h2>
+      <p class="text-sm text-zinc-500 mb-4">Once you delete your account, there is no going back.</p>
+      <button (click)="deleteAccount()"
+              class="bg-red-500/10 text-red-400 border border-red-500/20 px-5 py-2 rounded-lg text-sm font-medium hover:bg-red-500/20 transition-colors cursor-pointer">
+        Delete Account
+      </button>
+    </div>
+  }
+</div>

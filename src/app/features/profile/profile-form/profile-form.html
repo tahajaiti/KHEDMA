@@ -1,0 +1,63 @@
+<div class="bg-[#0f0f17] rounded-xl border border-[#1a1a25] p-6">
+  <div class="flex items-center justify-between mb-6">
+    <h2 class="text-lg font-semibold text-zinc-100">Personal Information</h2>
+    @if (!editing) {
+      <button (click)="startEditing()"
+              class="text-sm text-amber-400 hover:text-amber-300 font-medium transition-colors cursor-pointer">
+        Edit
+      </button>
+    }
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div>
+        <label class="block text-sm font-medium text-zinc-400 mb-1.5">First Name</label>
+        <input type="text" formControlName="firstName"
+               [readonly]="!editing"
+               [class]="editing
+                 ? 'w-full px-4 py-2.5 bg-[#0a0a0f] border border-[#2a2a35] rounded-lg text-sm text-zinc-200 focus:ring-1 focus:ring-amber-500/50 focus:border-amber-500/50 outline-none transition-shadow'
+                 : 'w-full px-4 py-2.5 bg-[#1a1a25] border border-[#1a1a25] rounded-lg text-sm text-zinc-400'">
+        @if (editing && form.get('firstName')?.touched && form.get('firstName')?.errors) {
+          <p class="text-red-400 text-xs mt-1">First name is required (min 2 characters)</p>
+        }
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-zinc-400 mb-1.5">Last Name</label>
+        <input type="text" formControlName="lastName"
+               [readonly]="!editing"
+               [class]="editing
+                 ? 'w-full px-4 py-2.5 bg-[#0a0a0f] border border-[#2a2a35] rounded-lg text-sm text-zinc-200 focus:ring-1 focus:ring-amber-500/50 focus:border-amber-500/50 outline-none transition-shadow'
+                 : 'w-full px-4 py-2.5 bg-[#1a1a25] border border-[#1a1a25] rounded-lg text-sm text-zinc-400'">
+        @if (editing && form.get('lastName')?.touched && form.get('lastName')?.errors) {
+          <p class="text-red-400 text-xs mt-1">Last name is required (min 2 characters)</p>
+        }
+      </div>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-zinc-400 mb-1.5">Email</label>
+      <input type="email" formControlName="email"
+             [readonly]="!editing"
+             [class]="editing
+               ? 'w-full px-4 py-2.5 bg-[#0a0a0f] border border-[#2a2a35] rounded-lg text-sm text-zinc-200 focus:ring-1 focus:ring-amber-500/50 focus:border-amber-500/50 outline-none transition-shadow'
+               : 'w-full px-4 py-2.5 bg-[#1a1a25] border border-[#1a1a25] rounded-lg text-sm text-zinc-400'">
+      @if (editing && form.get('email')?.touched && form.get('email')?.errors) {
+        <p class="text-red-400 text-xs mt-1">Valid email is required</p>
+      }
+    </div>
+
+    @if (editing) {
+      <div class="flex gap-3 pt-2">
+        <button type="submit"
+                class="bg-amber-500 text-black px-5 py-2 rounded-lg text-sm font-semibold hover:bg-amber-400 transition-colors cursor-pointer">
+          Save Changes
+        </button>
+        <button type="button" (click)="cancelEditing()"
+                class="text-zinc-400 border border-[#2a2a35] px-5 py-2 rounded-lg text-sm font-medium hover:border-zinc-600 transition-colors cursor-pointer">
+          Cancel
+        </button>
+      </div>
+    }
+  </form>
+</div>
