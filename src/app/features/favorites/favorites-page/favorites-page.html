@@ -1,0 +1,25 @@
+<div class="max-w-5xl mx-auto px-4 py-8">
+  <h1 class="text-2xl font-bold text-zinc-100 mb-1">Saved Jobs</h1>
+  <p class="text-zinc-500 text-sm mb-8">Your favorite job listings</p>
+
+  @if (loading$ | async) {
+    <app-loading-spinner />
+  } @else {
+    @if ((favorites$ | async); as favorites) {
+      @if (favorites.length === 0) {
+        <div class="text-center py-16">
+          <div class="w-16 h-16 bg-[#1a1a25] rounded-full flex items-center justify-center mx-auto mb-4 text-zinc-600">
+            <ng-icon name="lucideHeart" size="32" />
+          </div>
+          <p class="text-zinc-500 text-sm">No saved jobs yet. Browse jobs and save the ones you like!</p>
+        </div>
+      } @else {
+        <div class="space-y-4">
+          @for (fav of favorites; track fav.id) {
+            <app-favorite-card [favorite]="fav" (remove)="removeFavorite($event)" />
+          }
+        </div>
+      }
+    }
+  }
+</div>
